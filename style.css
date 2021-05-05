@@ -69,21 +69,17 @@ body{
     width: 30rem;
     display: flex;
     flex-direction: column;
-    
+    box-shadow: 0 1px 3px rgba(0,0,0,0.12), 2px 2px 2px rgba(0,0,0,0.24);
+    border-radius: .25rem;
 }
 
-.cross{
-    position: absolute;
-    left : 95%;
-    margin-top: -1px;
-    font-family: cursive;
-    color: darkpink;
-    font-size: 22px;
-    user-select: none;
+.fa-times-circle{
+    display: inline-block;
+    position: relative;
+    padding-left: 97%;
 }
 
 .title_container{
-    margin-top: 1rem;
     height: 80%;
     width: 100%;
     display: flex;
@@ -94,6 +90,7 @@ body{
 .task_name{
     width: 80%;
     align-self: center;
+    font-family: cursive;
 
 }
 
@@ -101,17 +98,32 @@ body{
     align-self: center;
     width: 80%;
     height: 60%;
+    font-family: cursive;
 }
 
 .choose_priority{
     display: flex;
     justify-content: space-evenly;
     align-items: center;
+    font-family: cursive;
     
 }
 
 .drop_down{
     
+}
+
+.savebtn{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.save_btn{
+    margin-top: 4%;
+    border-radius: 20px;
+    font-family: cursive;
+    border-color: black;
 }
 
 .ticket_container{
