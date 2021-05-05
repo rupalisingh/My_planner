@@ -157,9 +157,10 @@ body{
    display: none;
    position: absolute;
    background-color: #ffffff;
-   min-width: 160px;
+   min-width: 16px;
    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
    z-index: 1;
+   font-family: cursive;
 }
 
 .icon_container:hover .dropdown_content {
@@ -172,8 +173,8 @@ body{
    display: block;
 }
 
-.dropdown_content a :hover {
-   background-color: darkkhaki}
+.dropdown_content a:hover {
+   background-color: peachpuff}
 
 .fa-ellipsis-h{
    cursor: pointer;
