@@ -1,3 +1,4 @@
+'use strict';
 let body = document.body
 let maincontainer = document.querySelector(".main_container")
 let allticketarr = []
@@ -56,51 +57,88 @@ function createmodal(){
 function addtasktopage(modalContainer){
     let savebtnclicked = document.querySelector(".save_btn")
     savebtnclicked.addEventListener("click", function(e){
+        let uid = uuidv4()
         let taskname = document.querySelector(".task_name")
         let dropdown = document.querySelector(".drop_down")
         let duedate = document.querySelector(".duedate")
         modalContainer.remove()
-        createtask(taskname.value, dropdown.value, duedate.value)
+        createtask(taskname.value, dropdown.value, duedate.value, uid)
 })
-
-
 }
 
 
-function createtask(title, priority, duedate){
+function createtask(title, priority, duedate, uid){
     let ticketcontainer = document.createElement("div")
     ticketcontainer.setAttribute("class", "ticket_container")
     ticketcontainer.innerHTML = `<div class="icon_container">
     <div class="kebab">
-        <i class="fas fa-ellipsis-h"></i>
+    <i class="fas fa-ellipsis-h"></i>
+    
     </div>
     <div class="dropdown_content">
-        <a class = "view" href="#">View</a>
-        <a class = "Edit" href="#">Edit</a>
-        <a class = "delete" href="#">Delete</a>
+    <a class = "view" href="#" id = "view" value = "${uid}">View</a>
+    <a class = "Edit" href="#" id = "Edit" value = "${uid}">Edit</a>
+    <a class = "delete" href="#" id = "delete" value = "${uid}">Delete</a>
     </div>
-</div>
-<div class = "information">
+    </div>
+    <div class = "information">
     <div class = "tasktitlediv"><h1 class = "task_title">${title}</h1></div>
     <div class = "sub_information">
-        <h4 class = "priority_selected">Urgency : ${priority}</h4>
-        <h4 class="due_date">Due date: ${duedate}</h4>
+    <h4 class = "priority_selected">Urgency : ${priority}</h4>
+    <h4 class="due_date">Due date: ${duedate}</h4>
+    
     </div>
-</div>`
-
+    </div>`
+    
     maincontainer.appendChild(ticketcontainer)
-    allticketarr.push(ticketcontainer)
-    console.log(allticketarr)
+    allticketarr.push([uid, ticketcontainer])
+    localStorage.setItem("Alltickets", allticketarr)
+    //console.log(allticketarr)
 
     // Delete task
 
-    let deletebtn = document.querySelector(".delete")
+    let deletebtn = ticketcontainer.querySelector(".delete")
     deletebtn.addEventListener("click", deletetask)
 
-    function deletetask(){
-        ticketcontainer.remove()
-    }
+    // View Task
 
+    let viewbtn = ticketcontainer.querySelector(".view")
+    viewbtn.addEventListener("click", viewtask)
 
+    
 }
 
+function deletetask(e){
+    console.log("clicked")
+    let currticketcontainer = e.currentTarget;
+    console.log(currticketcontainer)
+    let uid = currticketcontainer.getAttribute("value")
+    for(let i = 0; i< allticketarr.length; i++){
+        let id = (allticketarr[i])[0]
+        let ticketselected = (allticketarr[i])[1]
+        if(id == uid){
+            let arr1 = allticketarr.splice(0, i)
+            let arr2 = allticketarr.splice(i+1, allticketarr.length)
+            allticketarr = arr1.concat(arr2)
+            localStorage.setItem("Alltickets", allticketarr)
+            ticketselected.remove()
+        }
+      
+    }
+   
+    
+}
+
+function viewtask(e){
+    
+}
+
+
+
+
+function uuidv4() {
+    return 'xxxxxxx'.replace(/[xy]/g, function(c) {
+      var r = Math.random() * 16 | 0, v = c == 'x' ? r : (r & 0x3 | 0x8);
+      return v.toString(16);
+    });
+}
