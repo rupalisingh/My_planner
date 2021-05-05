@@ -39,6 +39,8 @@ function createmodal(){
     }
 
     body.appendChild(modalContainer)
+
+    addtasktopage(modalContainer)
   
     // close modal using x button
 
@@ -46,12 +48,10 @@ function createmodal(){
     closemodalbtn.addEventListener("click", closemodal)
     function closemodal(){
         if(modalContainer != null){
-        modalContainer.remove()
+            modalContainer.remove()
+        }
     }
 
-}
-    addtasktopage(modalContainer)
-    
 }
 
 function addtasktopage(modalContainer){
@@ -59,15 +59,16 @@ function addtasktopage(modalContainer){
     savebtnclicked.addEventListener("click", function(e){
         let uid = uuidv4()
         let taskname = document.querySelector(".task_name")
+        let description = document.querySelector(".description")
         let dropdown = document.querySelector(".drop_down")
         let duedate = document.querySelector(".duedate")
         modalContainer.remove()
-        createtask(taskname.value, dropdown.value, duedate.value, uid)
+        createtask(taskname.value, description.value, dropdown.value, duedate.value, uid)
 })
 }
 
 
-function createtask(title, priority, duedate, uid){
+function createtask(title, description, priority, duedate, uid){
     let ticketcontainer = document.createElement("div")
     ticketcontainer.setAttribute("class", "ticket_container")
     ticketcontainer.innerHTML = `<div class="icon_container">
@@ -91,9 +92,9 @@ function createtask(title, priority, duedate, uid){
     </div>`
     
     maincontainer.appendChild(ticketcontainer)
-    allticketarr.push([uid, ticketcontainer])
+    allticketarr.push([uid, ticketcontainer, title, description, priority, duedate ])
     localStorage.setItem("Alltickets", allticketarr)
-    //console.log(allticketarr)
+    console.log(allticketarr)
 
     // Delete task
 
@@ -109,9 +110,8 @@ function createtask(title, priority, duedate, uid){
 }
 
 function deletetask(e){
-    console.log("clicked")
+
     let currticketcontainer = e.currentTarget;
-    console.log(currticketcontainer)
     let uid = currticketcontainer.getAttribute("value")
     for(let i = 0; i< allticketarr.length; i++){
         let id = (allticketarr[i])[0]
@@ -130,9 +130,61 @@ function deletetask(e){
 }
 
 function viewtask(e){
-    
+    getvalues()
+    function getvalues(){
+        let currticketcontainer = e.currentTarget;
+        let uid = currticketcontainer.getAttribute("value")
+        for(let i = 0; i< allticketarr.length; i++){
+            let id = (allticketarr[i])[0]
+            if(id == uid){
+                let settitle = (allticketarr[i])[2]
+                let setdescription = (allticketarr[i])[3]
+                let setpriority = (allticketarr[i])[4]
+                let setdate = (allticketarr[i])[5]
+                console.log(setdescription)
+                console.log(setpriority)
+                viewmodal()
+                 
+                function viewmodal(){
+                    let modalContainer = document.querySelector(".modal_container")
+                    if(modalContainer == null){
+                        modalContainer = document.createElement("div")
+                        modalContainer.setAttribute("class", "modal_container")
+                        modalContainer.innerHTML = `<i class="fas fa-times-circle"></i>
+                        <div class = "title_container" ">
+                            <input type="text" class = "task_name" readonly="readonly" value = "${settitle}">
+                            <textarea class="description" readonly="readonly">${setdescription}</textarea>
+                            </div>
+                            <div class = "choose_priority">
+                                <label>Task Priority: <select class="drop_down">
+                                    <option selected disable hidden>${setpriority}</option>
+                                </select></label>
+                                  <label >Due Date: <input type="date" class="duedate" name="trip-start"
+                                        value="${setdate}" readonly="readonly"
+                                        min="2019-01-01" max="2050-12-31">
+                                  </label>
+                                   
+                        </div>`
+                    
+                            
+                        }
+                    
+                        body.appendChild(modalContainer)
+                      
+                        // close modal using x button
+                    
+                        let closemodalbtn = document.querySelector(".fa-times-circle")
+                        closemodalbtn.addEventListener("click", closemodal)
+                        function closemodal(){
+                            if(modalContainer != null){
+                                modalContainer.remove()
+                            }
+                        }
+                }
+            }
+        }
+    }
 }
-
 
 
 
