@@ -80,6 +80,7 @@ function createtask(title, description, priority, duedate, uid){
     <a class = "view" href="#" id = "view" value = "${uid}">View</a>
     <a class = "Edit" href="#" id = "Edit" value = "${uid}">Edit</a>
     <a class = "delete" href="#" id = "delete" value = "${uid}">Delete</a>
+    <a class = "complete" href="#" id = "complete" value = "${uid}">Mark as Complete</a>
     </div>
     </div>
     <div class = "information">
@@ -110,6 +111,11 @@ function createtask(title, description, priority, duedate, uid){
 
     let editbtn = ticketcontainer.querySelector(".Edit")
     editbtn.addEventListener("click", Edittask)
+
+    // Mark as complete task
+    
+    let completebtn = ticketcontainer.querySelector(".complete")
+    completebtn.addEventListener("click", markcomplete)
 
     
 }
@@ -146,8 +152,6 @@ function viewtask(e){
                 let setdescription = (allticketarr[i])[3]
                 let setpriority = (allticketarr[i])[4]
                 let setdate = (allticketarr[i])[5]
-                console.log(setdescription)
-                console.log(setpriority)
                 viewmodal()
                  
                 function viewmodal(){
@@ -190,7 +194,6 @@ function viewtask(e){
         }
     }
 }
-
 
 function Edittask(e){
     getvalues()
@@ -251,6 +254,25 @@ function Edittask(e){
     }
 }
 
+function markcomplete(e){
+    let currticketcontainer = e.currentTarget;
+    let uid = currticketcontainer.getAttribute("value")
+    for(let i = 0; i< allticketarr.length; i++){
+        let id = (allticketarr[i])[0]
+        let ticketselected = (allticketarr[i])[1]
+        if(id == uid){
+            let title = ticketselected.querySelector(".task_title").innerText.strike()
+            ticketselected.querySelector(".task_title").innerHTML = title
+            
+            let priority = ticketselected.querySelector(".priority_selected").innerText.strike()
+            ticketselected.querySelector(".priority_selected").innerHTML = priority
+
+            let due_date = ticketselected.querySelector(".due_date").innerText.strike()
+            ticketselected.querySelector(".due_date").innerHTML = due_date
+        }
+      
+    }
+}
 
 function uuidv4() {
     return 'xxxxxxx'.replace(/[xy]/g, function(c) {
