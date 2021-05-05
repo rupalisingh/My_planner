@@ -35,20 +35,6 @@ body{
 }
 
 
-.priority{
-   background-color: white;
-   width: 50%;
-   margin-bottom: 2rem;
-   border-radius: 20px;
-   border-color: black;
-   height: 50px;
-   font-family : cursive;
-}
-
-.priority :hover{
-   background-color: #ffd79d;
-}
-
 /* Modal */
 
 .main_container{
