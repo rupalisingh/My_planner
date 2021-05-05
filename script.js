@@ -106,6 +106,11 @@ function createtask(title, description, priority, duedate, uid){
     let viewbtn = ticketcontainer.querySelector(".view")
     viewbtn.addEventListener("click", viewtask)
 
+    // Edit Task
+
+    let editbtn = ticketcontainer.querySelector(".Edit")
+    editbtn.addEventListener("click", Edittask)
+
     
 }
 
@@ -186,6 +191,65 @@ function viewtask(e){
     }
 }
 
+
+function Edittask(e){
+    getvalues()
+    function getvalues(){
+        let currticketcontainer = e.currentTarget;
+        let uid = currticketcontainer.getAttribute("value")
+        for(let i = 0; i< allticketarr.length; i++){
+            let id = (allticketarr[i])[0]
+            if(id == uid){
+                let settitle = (allticketarr[i])[2]
+                let setdescription = (allticketarr[i])[3]
+                let setpriority = (allticketarr[i])[4]
+                let setdate = (allticketarr[i])[5]
+                deletetask(e)
+                viewmodal()
+                function viewmodal(){
+                    let modalContainer = document.querySelector(".modal_container")
+                    if(modalContainer == null){
+                        modalContainer = document.createElement("div")
+                        modalContainer.setAttribute("class", "modal_container")
+                        modalContainer.innerHTML = `<i class="fas fa-times-circle"></i>
+                        <div class = "title_container">
+                            <input type="text" class = "task_name"  value = "${settitle}">
+                            <textarea class="description">${setdescription}</textarea>
+                            </div>
+                            <div class = "choose_priority">
+                                <label>Task Priority: <select class="drop_down">
+                                    <option >Priority 1</option>
+                                    <option >Priority 3</option>
+                                    <option >Priority 2</option>
+                                    <option >Priority 4</option>
+                                    </select></label>
+                                  <label >Due Date: <input type="date" class="duedate" name="trip-start"
+                                        value="${setdate}" 
+                                        min="2019-01-01" max="2050-12-31">
+                                  </label>
+                        </div>
+                        <div class = "savebtn">
+                            <button type = "button" class="save_btn">Save task</button>
+                        </div>`                                
+                        }
+                        body.appendChild(modalContainer)
+                        addtasktopage(modalContainer)
+                        // close modal using x button
+                    
+                        let closemodalbtn = document.querySelector(".fa-times-circle")
+                        closemodalbtn.addEventListener("click", closemodal)
+                        function closemodal(){
+                            if(modalContainer != null){
+                                modalContainer.remove()
+                            }
+                        }
+
+                        createtask(taskname.value, description.value, dropdown.value, duedate.value, uid)
+                }
+            }
+        }
+    }
+}
 
 
 function uuidv4() {
