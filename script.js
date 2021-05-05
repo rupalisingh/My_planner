@@ -1,8 +1,8 @@
 let body = document.body
-let addtaskbtn = document.querySelector(".add_toBucket")
 let maincontainer = document.querySelector(".main_container")
-let closemodalbtn = document.querySelector(".cross")
 
+//  add task
+let addtaskbtn = document.querySelector(".add_toBucket")
 addtaskbtn.addEventListener("click", createmodal)
 
 function createmodal(){
@@ -10,42 +10,55 @@ function createmodal(){
     if(modalContainer == null){
         modalContainer = document.createElement("div")
         modalContainer.setAttribute("class", "modal_container")
-        modalContainer.innerHTML = `<div class = "title_container">
-        <p class="cross">x</p>
-        <input type="text" class = "task_name" placeholder="Enter task name here">
-        <textarea class="description" placeholder="Write Description"></textarea>
-    </div>
-    <div class = "choose_priority">
-        <label for class="choose_priority"></label>
-        <select class="drop_down">
-            <option >Priority 1</option>
-            <option >Priority 2</option>
-            <option >Priority 3</option>
-            <option >Priority 4</option>
-          </select>
-          <label for="start">Due Date:</label>
-
-            <input type="date" class="duedate" name="trip-start"
+        modalContainer.innerHTML = `<i class="fas fa-times-circle"></i>
+        <div class = "title_container">
+            <input type="text" class = "task_name" placeholder="Enter task name here">
+            <textarea class="description" placeholder="Write Description"></textarea>
+        </div>
+        <div class = "choose_priority">
+            <label>Task Priority: <select class="drop_down">
+                <option >Priority 1</option>
+                <option >Priority 2</option>
+                <option >Priority 3</option>
+                <option >Priority 4</option>
+              </select></label>
+           
+              <label >Due Date: <input type="date" class="duedate" name="trip-start"
                 value="2018-07-22"
-                min="2018-01-01" max="2018-12-31">
+                min="2019-01-01" max="2050-12-31"></label>
+               
+        </div>
+        <div class = "savebtn">
+            <button type = "button" class="save_btn">Save task</button>
+        </div>`
 
-          <button type = "button" class="save_btn">Save task</button>
-    </div>`
+        
     }
+
     body.appendChild(modalContainer)
+  
+    // close modal using x button
+
+    let closemodalbtn = document.querySelector(".fa-times-circle")
+    closemodalbtn.addEventListener("click", closemodal)
+    function closemodal(){
+        if(modalContainer != null){
+        modalContainer.remove()
+    }
+
+}
     addtasktopage(modalContainer)
     
 }
 
 function addtasktopage(modalContainer){
     let savebtnclicked = document.querySelector(".save_btn")
-
-savebtnclicked.addEventListener("click", function(e){
-    let taskname = document.querySelector(".task_name")
-    let dropdown = document.querySelector(".drop_down")
-    let duedate = document.querySelector(".duedate")
-    modalContainer.remove()
-    createtask(taskname.value, dropdown.value, duedate.value)
+    savebtnclicked.addEventListener("click", function(e){
+        let taskname = document.querySelector(".task_name")
+        let dropdown = document.querySelector(".drop_down")
+        let duedate = document.querySelector(".duedate")
+        modalContainer.remove()
+        createtask(taskname.value, dropdown.value, duedate.value)
 })
 
 
@@ -73,15 +86,14 @@ function createtask(title, priority, duedate){
 </div>`
 
     maincontainer.appendChild(ticketcontainer)
-    kebabmenuoptions(ticketcontainer)
 
 }
 
-function kebabmenuoptions (ticketcontainer){
-    let kebabmenu = document.querySelector(".fa-ellipsis-h")
-    kebabmenu.addEventListener("click", kebabdropdownlist)
-}
+// Delete task
 
-function kebabdropdownlist(){
+let deletebtn = document.querySelector(".delete")
+deletebtn.addEventListener("click", function deletetask)
 
+function deletetask(){
+    
 }
