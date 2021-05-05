@@ -1,5 +1,7 @@
 let body = document.body
 let maincontainer = document.querySelector(".main_container")
+let allticketarr = []
+
 
 //  add task
 let addtaskbtn = document.querySelector(".add_toBucket")
@@ -69,31 +71,36 @@ function createtask(title, priority, duedate){
     let ticketcontainer = document.createElement("div")
     ticketcontainer.setAttribute("class", "ticket_container")
     ticketcontainer.innerHTML = `<div class="icon_container">
-        <div class="kebab">
-            <i class="fas fa-ellipsis-h"></i>
-        </div>
-        <div class="dropdown_content">
-            <a class = "view" href="#">View</a>
-            <a class = "Edit" href="#">Edit</a>
-            <a class = "delete" href="#">Delete</a>
-        </div>
+    <div class="kebab">
+        <i class="fas fa-ellipsis-h"></i>
     </div>
-    <div class = "information">
-        <div class = "task_title">${title}</div>
-        <div class = "priority_selected">${priority}</div>
-        <div class="due_date">${duedate}</div>
+    <div class="dropdown_content">
+        <a class = "view" href="#">View</a>
+        <a class = "Edit" href="#">Edit</a>
+        <a class = "delete" href="#">Delete</a>
+    </div>
+</div>
+<div class = "information">
+    <div class = "tasktitlediv"><h1 class = "task_title">${title}</h1></div>
+    <div class = "sub_information">
+        <h4 class = "priority_selected">Urgency : ${priority}</h4>
+        <h4 class="due_date">Due date: ${duedate}</h4>
     </div>
 </div>`
 
     maincontainer.appendChild(ticketcontainer)
+    allticketarr.push(ticketcontainer)
+    console.log(allticketarr)
+
+    // Delete task
+
+    let deletebtn = document.querySelector(".delete")
+    deletebtn.addEventListener("click", deletetask)
+
+    function deletetask(){
+        ticketcontainer.remove()
+    }
+
 
 }
 
-// Delete task
-
-let deletebtn = document.querySelector(".delete")
-deletebtn.addEventListener("click", function deletetask)
-
-function deletetask(){
-    
-}
