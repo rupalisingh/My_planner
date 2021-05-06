@@ -23,7 +23,6 @@ function createmodal(){
                 <option >Priority 1</option>
                 <option >Priority 2</option>
                 <option >Priority 3</option>
-                <option >Priority 4</option>
               </select></label>
            
               <label >Due Date: <input type="date" class="duedate" name="trip-start"
@@ -71,28 +70,41 @@ function addtasktopage(modalContainer){
 function createtask(title, description, priority, duedate, uid){
     let ticketcontainer = document.createElement("div")
     ticketcontainer.setAttribute("class", "ticket_container")
-    ticketcontainer.innerHTML = `<div class="icon_container">
-    <div class="kebab">
-    <i class="fas fa-ellipsis-h"></i>
-    
-    </div>
-    <div class="dropdown_content">
-    <a class = "view" href="#" id = "view" value = "${uid}">View</a>
-    <a class = "Edit" href="#" id = "Edit" value = "${uid}">Edit</a>
-    <a class = "delete" href="#" id = "delete" value = "${uid}">Delete</a>
-    <a class = "complete" href="#" id = "complete" value = "${uid}">Mark as Complete</a>
-    </div>
+    ticketcontainer.innerHTML = 
+    `<div class="icon_container">
+        <div class="kebab">
+            <i class="fas fa-ellipsis-h"></i>
+        </div>
+        <div class="dropdown_content">
+            <a class = "view" href="#" id = "view" value = "${uid}">View</a>
+            <a class = "Edit" href="#" id = "Edit" value = "${uid}">Edit</a>
+            <a class = "delete" href="#" id = "delete" value = "${uid}">Delete</a>
+            <a class = "complete" href="#" id = "complete" value = "${uid}">Mark as Complete</a>
+        </div>
     </div>
     <div class = "information">
-    <div class = "tasktitlediv"><h1 class = "task_title">${title}</h1></div>
-    <div class = "sub_information">
-    <h4 class = "priority_selected">Urgency : ${priority}</h4>
-    <h4 class="due_date">Due date: ${duedate}</h4>
-    
-    </div>
+        <div class = "tasktitlediv"><h1 class = "task_title">${title}</h1></div>
+        <div class = "sub_information">
+            <h4 class = "priority_selected">Urgency : ${priority}</h4>
+            <h4 class="due_date">Due date: ${duedate}</h4>
+        </div>
     </div>`
+
+    if(priority === "Priority 1"){
+        let prioritycontainer = document.querySelector(".division1")
+        prioritycontainer.appendChild(ticketcontainer)
+        ticketcontainer.style.backgroundColor = "#e31029"
+    }else if(priority === "Priority 2"){
+        let prioritycontainer = document.querySelector(".division2")
+        prioritycontainer.appendChild(ticketcontainer)
+        ticketcontainer.style.backgroundColor = "#72e031"
+    }else if(priority === "Priority 3"){
+        let prioritycontainer = document.querySelector(".division3")
+        prioritycontainer.appendChild(ticketcontainer)
+        ticketcontainer.style.backgroundColor = "#b742ed"
+    }   
     
-    maincontainer.appendChild(ticketcontainer)
+    //maincontainer.appendChild(ticketcontainer)
     allticketarr.push([uid, ticketcontainer, title, description, priority, duedate ])
     localStorage.setItem("Alltickets", allticketarr)
     console.log(allticketarr)
@@ -113,7 +125,7 @@ function createtask(title, description, priority, duedate, uid){
     editbtn.addEventListener("click", Edittask)
 
     // Mark as complete task
-    
+
     let completebtn = ticketcontainer.querySelector(".complete")
     completebtn.addEventListener("click", markcomplete)
 
@@ -129,7 +141,7 @@ function deletetask(e){
         let ticketselected = (allticketarr[i])[1]
         if(id == uid){
             let arr1 = allticketarr.splice(0, i)
-            let arr2 = allticketarr.splice(i+1, allticketarr.length)
+            let arr2 = allticketarr.splice(i, allticketarr.length)
             allticketarr = arr1.concat(arr2)
             localStorage.setItem("Alltickets", allticketarr)
             ticketselected.remove()
@@ -222,9 +234,8 @@ function Edittask(e){
                             <div class = "choose_priority">
                                 <label>Task Priority: <select class="drop_down">
                                     <option >Priority 1</option>
-                                    <option >Priority 3</option>
                                     <option >Priority 2</option>
-                                    <option >Priority 4</option>
+                                    <option >Priority 3</option>
                                     </select></label>
                                   <label >Due Date: <input type="date" class="duedate" name="trip-start"
                                         value="${setdate}" 
@@ -269,6 +280,9 @@ function markcomplete(e){
 
             let due_date = ticketselected.querySelector(".due_date").innerText.strike()
             ticketselected.querySelector(".due_date").innerHTML = due_date
+
+            let compeletedcontainer = document.querySelector(".division4")
+            compeletedcontainer.appendChild(ticketselected)
         }
       
     }
