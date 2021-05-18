@@ -3,7 +3,8 @@ let body = document.body
 let maincontainer = document.querySelector(".main_container")
 let allticketarr = []
 
-
+let today_date = curr_date()
+console.log(today_date)
 //  add task
 let addtaskbtn = document.querySelector(".add_toBucket")
 addtaskbtn.addEventListener("click", createmodal)
@@ -25,9 +26,8 @@ function createmodal(){
                 <option >Priority 3</option>
               </select></label>
            
-              <label >Due Date: <input type="date" class="duedate" name="trip-start"
-                value="2018-07-22"
-                min="2019-01-01" max="2050-12-31"></label>
+              <label >Due Date: <input type="date" class="duedate" value="${today_date}"
+                min="${today_date}" max="2050-12-31"></label>
                
         </div>
         <div class = "savebtn">
@@ -65,7 +65,6 @@ function addtasktopage(modalContainer){
         createtask(taskname.value, description.value, dropdown.value, duedate.value, uid)
 })
 }
-
 
 function createtask(title, description, priority, duedate, uid){
     let ticketcontainer = document.createElement("div")
@@ -180,9 +179,8 @@ function viewtask(e){
                                 <label>Task Priority: <select class="drop_down">
                                     <option selected disable hidden>${setpriority}</option>
                                 </select></label>
-                                  <label >Due Date: <input type="date" class="duedate" name="trip-start"
-                                        value="${setdate}" readonly="readonly"
-                                        min="2019-01-01" max="2050-12-31">
+                                  <label >Due Date: <input type="date" class="duedate"
+                                        value="${setdate}" readonly="readonly">
                                   </label>
                                    
                         </div>`
@@ -239,7 +237,7 @@ function Edittask(e){
                                     </select></label>
                                   <label >Due Date: <input type="date" class="duedate" name="trip-start"
                                         value="${setdate}" 
-                                        min="2019-01-01" max="2050-12-31">
+                                        min="${today_date}" max="2050-12-31">
                                   </label>
                         </div>
                         <div class = "savebtn">
@@ -293,4 +291,15 @@ function uuidv4() {
       var r = Math.random() * 16 | 0, v = c == 'x' ? r : (r & 0x3 | 0x8);
       return v.toString(16);
     });
+}
+
+
+function curr_date(){
+    var today = new Date();
+    var month = today.getMonth() + 1
+    if(month < 10){
+        month = '0' + month
+    }
+    var date = today.getFullYear()+'-'+ month +'-'+today.getDate();
+    return date
 }
